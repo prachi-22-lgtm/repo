@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>📝 Signup - Wikipedia Chatbot</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #333;
+    }
+    .signup-container {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      width: 320px;
+    }
+    h2 {
+      margin-bottom: 24px;
+    }
+    input {
+      padding: 12px;
+      width: 100%;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+    button {
+      padding: 12px;
+      width: 100%;
+      background: #e67e22;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #d35400;
+    }
+    .link {
+      margin-top: 16px;
+      font-size: 0.9rem;
+    }
+    .link a {
+      color: #e67e22;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="signup-container">
+    <h2>📝 Signup</h2>
+    <form method="POST">
+      <input type="text" name="username" placeholder="Choose a username" required><br>
+      <input type="password" name="password" placeholder="Create a password" required><br>
+      <button type="submit">Sign Up</button>
+    </form>
+    <div class="link">Already have an account? <a href="/login">Login here</a></div>
+  </div>
+</body>
+</html>
