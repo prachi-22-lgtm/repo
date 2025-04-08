@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>📚 Wikipedia Chatbot</title>
+  <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #74ebd5 0%, #9face6 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .chat-container {
+      background: white;
+      width: 400px;
+      max-height: 90vh;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .chat-header {
+      background: #4A90E2;
+      color: white;
+      padding: 16px;
+      text-align: center;
+      font-size: 1.4rem;
+      font-weight: bold;
+    }
+    .chat-box {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
+      font-size: 1rem;
+      scroll-behavior: smooth;
+    }
+    .user-message, .bot-message {
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+    .user-message { text-align: right; color: #333; }
+    .bot-message { text-align: left; color: #2c3e50; }
+    .chat-input {
+      display: flex;
+      border-top: 1px solid #eee;
+    }
+    input[type="text"] {
+      flex: 1;
+      border: none;
+      padding: 14px;
+      font-size: 1rem;
+      outline: none;
+    }
+    button {
+      background: #4A90E2;
+      color: white;
+      border: none;
+      padding: 0 24px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #357ABD;
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-header">Wikipedia Chatbot</div>
+    <div class="chat-box" id="chat-box">
+      <div class="bot-message">👋 Ask me anything about the world!</div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="user-input" placeholder="Type your question..." autofocus>
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    function sendMessage() {
+      const userInput = document.getElementById("user-input");
+      const message = userInput.value.trim();
+      if (!message) return;
+
+      const chatBox = document.getElementById("chat-box");
+      const userMessage = document.createElement("div");
+      userMessage.className = "user-message";
+      userMessage.innerText = message;
+      chatBox.appendChild(userMessage);
+      userInput.value = "";
+
+      const botMessage = document.createElement("div");
+      botMessage.className = "bot-message";
+      botMessage.innerText = "⏳ Thinking...";
+      chatBox.appendChild(botMessage);
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      fetch(`/get?msg=${encodeURIComponent(message)}`)
+        .then(res => res.json())
+        .then(data => {
+          botMessage.innerText = data.response;
+          chatBox.scrollTop = chatBox.scrollHeight;
+        })
+        .catch(() => {
+          botMessage.innerText = "⚠️ Sorry, something went wrong!";
+        });
+    }
+
+    document.getElementById("user-input").addEventListener("keydown", function(e) {
+      if (e.key === "Enter") sendMessage();
+    });
+  </script>
+</body>
+</html>
+
